@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { PieChart, Pie, Cell } from 'recharts';
 //components
 import Record from '../../components/Record/Record';
 import Category from '../../components/Category/Category';
@@ -80,7 +81,11 @@ const Income = () => {
           }
           })
           .then(resData => {
-            setCategories(resData.data.data.getCategories)
+            const newData = resData.data.data.getCategories.map(x => ({
+              ...x,
+              amount: 0,
+            }))
+            setCategories(newData)
           })
           .catch(err => console.log(err));
     }
@@ -110,9 +115,6 @@ const Income = () => {
       }
 
       return records.map((record, i) => { 
-        //if (categories.length === 0) {
-        //  return setCategories([{ name: record.category, amount: record.amount }])
-        //} else {
           if (recordMatch(record)) {    
             const result = records.filter(obj => {
               return obj.category === record.category
@@ -126,16 +128,22 @@ const Income = () => {
           else {
             return setCategories([...categories, {name: record.category, amount: record.amount}])
           }
-        //}
       })
     } else {
       return 
     }
   }
 
+  const overallCount = () => {
+    let count = 0
+    records.map((record) => {
+      return count = count + record.amount
+    })
+    return count
+  }
+
   const renderCategories = () => {
     countCategories();
-    console.log(categories)
     let count = 0
     categories.map((category, i) => {
       if (category.amount) {
@@ -144,21 +152,59 @@ const Income = () => {
         return count = count + 0
       }
     })
-    return categories.sort((categoryA, categoryB) => (categoryA.amount < categoryB.amount) ? 1 : -1).map((category, i) => {
+    return categories.map((category, i) => {
       return <Category category={category.name} amount={category.amount} percentage={Math.round((100/(count/category.amount)) * 10) / 10} color={category.color} key={i} />
     })
   }
-  
+
+  const RADIAN = Math.PI / 180;
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text x={x} y={y} fill="white" style={{ fontSize: '18px', fontWeight: 'bold' }} textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+      {`${(percent * 100).toFixed(1)}%`}
+    </text>
+  );
+};
+
     return (
       <div className='income'>
-        <section className='income__section'>CHART</section>
-        <div className='income__category'>
+        <div className='income__box'>
+        <section className='income__chart'>
+          <h1 className='income__chart-header'>Last 30 days</h1>
+          <PieChart className='income__chart-container' width={500} height={400}>
+          <text x={'50%'} y={'50%'} textAnchor="middle" dominantBaseline="middle" style={{ fontSize: '30px', fontWeight: 'bold' }} fill='white'>
+            {overallCount()}
+          </text>
+            <Pie
+              fontSize={'100'}
+              data={categories}
+              labelLine={false}
+              label={renderCustomizedLabel}
+              cx={'50%'}
+              cy={'50%'}
+              innerRadius={120}
+              outerRadius={200}
+              paddingAngle={0}
+              dataKey="amount"
+              stroke='none'
+            >
+            {categories.map((category, index) => (
+              <Cell key={`cell-${index}`} fill={category.color} />
+            ))}
+            </Pie>
+          </PieChart>
+        </section>
+        <section className='income__category'>
           {renderCategories()}
-          
-        </div>
-        <div className='income__record'>
+        </section>
+        <section className='income__record'>
           {renderRecords()}
           <Link className='income__add-button btn__small-lightorange' to='/addrecord'>Add +</Link>
+        </section>
         </div>
       </div>
     )

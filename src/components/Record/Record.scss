@@ -2,7 +2,7 @@
 
 .record {
     height: 6rem;
-    width: 100%;
+    width: 98%;
     display: flex;
     box-shadow: $color-black 2px 1px 15px -3px;
     justify-content: space-between;
@@ -10,14 +10,13 @@
     font-size: 1.8rem;
     border-radius: 10rem;
     padding-right: 1rem;
-    margin-top: 0.75rem;
-    margin-bottom: 0.75rem;
+    margin: 0.75rem auto 0.75rem auto;
 
     &__category {
         height: 100%;
         border-radius: 10rem;
         font-size: 1.4rem;
-        width: 14rem;
+        width: 13rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -26,7 +25,7 @@
 
     &__amount {
         font-weight: 600;
-        width: 15rem;
+        width: 14.5rem;
         text-align: center;
         &-income {
             color: $color-green;

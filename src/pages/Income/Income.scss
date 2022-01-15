@@ -8,22 +8,54 @@
     align-items: center;
     position: relative;
 
-    &__section {
+    &__box {
+        height: 80vh;
+        width: 100%;
+        display: flex;;
+        justify-content: space-around;
+        align-items: center;
+        position: relative;
+    }
+
+    &__chart {
         height: 80vh;
         width: calc((100vw - 20vw)/3);
         box-shadow: $color-black 2px 1px 15px -3px;
         border-radius: 5rem;
         padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center; 
+
+        &-text {
+            font-size: 3rem;
+            font-weight: '900';
+            font-family: $font-primary;
+        }
+
+        &-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &-header {
+            font-size: 4rem;
+        }
     }
 
     &__category {
         height: 80vh;
         width: calc((100vw - 35vw)/3);
+        overflow-y: scroll;
     }
     
     &__record {
-        height: 80vh;
+        align-self: flex-start;
+        height: 70vh;
         width: calc((100vw - 20vw)/3);
+        overflow-y: scroll;
     }
 
     &__add-button {

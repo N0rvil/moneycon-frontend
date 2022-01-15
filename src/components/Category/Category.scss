@@ -1,7 +1,7 @@
 @import '../../styles/variables.scss';
 
 .category {
-    width: 100%;
+    width: 98%;
     height: 6rem;
     display: flex;
     justify-content: space-between;
@@ -10,10 +10,8 @@
     box-shadow: $color-black 2px 1px 15px -3px;
     margin-top: 0.75rem;
     margin-bottom: 0.75rem;
-    border-top-right-radius: 100rem;
-    border-bottom-right-radius: 100rem;
-    border-top-left-radius: 2rem;
-    border-bottom-left-radius: 2rem;
+    border-radius: 2rem;
+    
 
     &__section {
         &-category {
@@ -29,6 +27,7 @@
 
         &-percentage {
             padding-right: 2rem;
+            border-radius: 100rem;
         }
     }
 
