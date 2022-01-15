@@ -1,0 +1,158 @@
+@import './variables.scss';
+
+.btn__small-red {
+    width: 6rem;
+    height: 3rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-text-primary;
+    border-radius: 100rem;
+    background: $color-red;
+    font-size: 1.2rem;
+    text-decoration: none;
+    font-weight: 300;
+    transition: all .2s;
+    border: none;
+    &:hover {
+        transform: scale(1.1);
+        box-shadow: $color-primary 2px 1px 15px -3px;
+        cursor: pointer;
+    }
+}
+
+.btn__small-lightorange {
+    width: 13rem;
+    height: 4.5rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-text-primary;
+    border-radius: 100rem;
+    background: $color-third;
+    font-size: 1.6rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all .2s;
+    border: none;
+    &:hover {
+        transform: scale(1.1);
+        box-shadow: $color-primary 2px 1px 15px -3px;
+        cursor: pointer;
+    }
+}
+
+.btn__small-white {
+    width: 13rem;
+    height: 4.5rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-third;
+    border-radius: 100rem;
+    background: $color-text-primary;
+    font-size: 1.6rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all .2s;
+    border: none;
+    &:hover {
+        transform: scale(1.1);
+        box-shadow: $color-primary 2px 1px 15px -3px;
+        cursor: pointer;
+    }
+}
+
+.btn__long-white {
+    width: 18rem;
+    height: 4.5rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-third;
+    border-radius: 100rem;
+    background: $color-text-primary;
+    font-size: 1.6rem;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all .2s;
+    border: none;
+    &:hover {
+        transform: scale(1.1);
+        box-shadow: $color-primary 2px 1px 15px -3px;
+        cursor: pointer;
+    }
+}
+
+.cancelbutton {
+    width: 15rem;
+    height: 5rem;
+    background-color: $color-text-primary;
+    border-radius: 100rem;
+    outline: none;
+    border: none;
+    color: $color-third;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: all .2s;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+}
+
+.deletebutton {
+    width: 15rem;
+    height: 5rem;
+    background-color: $color-red;
+    border-radius: 100rem;
+    outline: none;
+    border: none;
+    color: $color-text-primary;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    transition: all .2s;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+}
+
+.btn__medium-orange {
+    width: 30rem;
+    height: 10rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $color-text-primary;
+    border-radius: 4rem;
+    background: $color-third;
+    font-size: 2.8rem;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all .2s;
+    box-shadow: $color-black 2px 1px 15px -3px;
+    border: none;
+    &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+}
+

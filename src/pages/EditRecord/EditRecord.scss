@@ -1,0 +1,70 @@
+@import '../../styles/variables.scss';
+
+.editrecord {
+    background: $color-primary;
+    height: calc(100vh - 8rem);
+
+    &__box {
+        width: 60%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+
+    &__form {
+        height: 70vh;
+        width: 60rem;
+        background: $color-primary;
+        box-shadow: $color-black 0px 10px 30px 5px;
+        border-radius: 5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        position: absolute;
+        top: 55%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+
+        &-box {
+            height: 24rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        &-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        &-label {
+            margin-bottom: 0.5rem;
+            margin-left: 2rem;
+            font-size: 2rem;
+            color: $color-text-primary;
+            font-weight: 600;
+        }
+
+        &-select {
+            width: 32rem;
+            height: 5.5rem;
+            border-radius: 100rem;
+            font-size: 2.5rem;
+            padding: .6rem;
+            outline: none;
+            background-color: $color-primary;
+            border: 0.4rem solid $color-secondary;
+            color: $color-text-primary;
+        }
+    }
+
+    &__header {
+        text-align: center;
+        font-size: 5rem;
+        color: $color-text-primary;
+        text-transform: uppercase;
+    }
+}

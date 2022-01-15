@@ -1,0 +1,52 @@
+@import '../../styles/variables.scss';
+@import '../../styles/buttons.scss';
+
+.header {
+    height: 8rem;
+    background: $color-secondary;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5rem 0 5rem;
+    grid-column: 1 / 3;
+
+    &__nav {
+        width: 30rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__home {
+        height: 6.5rem;
+        width: 6.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 1rem;
+        transition: all .2s;
+        &:hover {
+            background: $color-third;
+        }
+    }
+
+    &__home-icon {
+        height: 5rem;
+    }
+
+    &__balance {
+        color: $color-text-primary;
+        font-size: 3rem;
+    }
+
+    &__logout {
+        &-icon {
+            height: 3.5rem;
+            margin-left: 3.5rem;
+        }
+
+        &:hover {
+            box-shadow: none;
+            transform: translateX(1rem);
+        }
+    }
+}

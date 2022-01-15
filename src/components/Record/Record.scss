@@ -1,0 +1,44 @@
+@import '../../styles/variables.scss';
+
+.record {
+    height: 6rem;
+    width: 100%;
+    display: flex;
+    box-shadow: $color-black 2px 1px 15px -3px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.8rem;
+    border-radius: 10rem;
+    padding-right: 1rem;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+
+    &__category {
+        height: 100%;
+        border-radius: 10rem;
+        font-size: 1.4rem;
+        width: 14rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 600;
+    }
+
+    &__amount {
+        font-weight: 600;
+        width: 15rem;
+        text-align: center;
+        &-income {
+            color: $color-green;
+        }
+
+        &-spendings {
+            color: $color-red;
+        }
+    }
+
+    &__icon {
+        height: 2.5rem;
+    }
+
+}

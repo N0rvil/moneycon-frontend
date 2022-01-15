@@ -1,0 +1,47 @@
+@import '../../styles/variables.scss';
+
+.signin {
+    background: $color-primary;
+    height: calc(100vh - 8rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: 1 / 3;
+
+    &__form {
+        height: 80vh;
+        width: 45rem;
+        background: $color-primary;
+        box-shadow: $color-black 0px 10px 30px 5px;
+        border-radius: 5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+
+        &-box {
+            height: 24rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+        }
+    }
+
+    &__header {
+        text-align: center;
+        font-size: 5rem;
+        color: $color-text-primary;
+        text-transform: uppercase;
+    }
+
+    &__error {
+        font-size: 2rem;
+        height: 1rem;
+        text-align: center;
+        width: 80%;
+        text-transform: uppercase;
+        color: $color-red;
+
+    }
+}

@@ -1,0 +1,36 @@
+@import '../../styles/variables.scss';
+
+.category {
+    width: 100%;
+    height: 6rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 2rem;
+    box-shadow: $color-black 2px 1px 15px -3px;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    border-top-right-radius: 100rem;
+    border-bottom-right-radius: 100rem;
+    border-top-left-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+
+    &__section {
+        &-category {
+            width: 35%;
+            height: 100%;
+            border-top-left-radius: 2rem;
+            border-bottom-left-radius: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+        }
+
+        &-percentage {
+            padding-right: 2rem;
+        }
+    }
+
+    
+}

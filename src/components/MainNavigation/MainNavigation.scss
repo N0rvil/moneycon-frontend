@@ -1,0 +1,53 @@
+@import '../../styles/variables.scss';
+
+.mainnavigation {
+    grid-column: 1 / 2;
+    background: $color-primary;
+    height: calc(100vh - 8rem);
+    padding: 1rem;
+
+    &__link {
+        display: flex;
+        height: 6rem;
+        align-items: center;
+        text-decoration: none;
+        justify-content: space-between;
+        margin-top: .5rem;
+        padding-left: .5rem;
+        &:hover {
+            transition: .6s ease-out;
+            background: linear-gradient(to left, $color-secondary 50%, $color-primary 50%);
+            background-size: 200% 100%;
+            background-position:right bottom;
+        }
+
+        &-active {
+            background: $color-secondary;
+            &:hover {
+                transition: none;
+            }
+        }
+    }
+    
+    &__text {
+        font-size: 1.5rem;
+        text-transform: uppercase;
+        color: $color-text-primary;  
+    }
+
+    &__box {
+        display: flex;
+        align-items: center;
+    }
+
+    &__icon {
+        height: 3.5rem;
+        margin-right: .5rem;
+    }
+
+    &__line {
+        height: 6rem;
+        width: .75rem;
+        background: $color-secondary;
+    }
+}

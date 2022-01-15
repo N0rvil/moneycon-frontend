@@ -1,0 +1,26 @@
+@import '../../styles/variables.scss';
+
+.forminput {
+    display: flex;
+    flex-direction: column;
+
+    &__label {
+        margin-bottom: 0.5rem;
+        margin-left: 2rem;
+        font-size: 2rem;
+        color: $color-text-primary;
+        font-weight: 600;
+    }
+
+    &__input {
+        width: 32rem;
+        height: 5.5rem;
+        border-radius: 100rem;
+        font-size: 2.5rem;
+        padding: 1rem;
+        outline: none;
+        background-color: $color-primary;
+        border: 0.4rem solid $color-secondary;
+        color: $color-text-primary;
+    }
+}
