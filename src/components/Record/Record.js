@@ -7,15 +7,15 @@ import { Link } from 'react-router-dom';
 //styles
 import './Record.scss';
 
-const Record = ({ id, type, category, amount, date }) => {
+const Record = ({ id, type, category, amount, date,currency }) => {
     return (
       <div className='record'>
             <div className='record__category'>{category}</div>
             <div className={type === 'income' ? 'record__amount record__amount-income' : 'record__amount record__amount-spendings' }>
-                {type === 'income' ? '+' + amount : '-' + amount }
+                {type === 'income' ? '+' + amount + ` ${currency}` : '-' + amount + ` ${currency}`}
             </div>
             <div className='record__percentage'>{date}</div>
-            <Link to={{ pathname: id }} state={{ category, amount, id }}><img className='record__icon' src='/icons/pencil.png' alt='icon' /></Link>
+            <Link to={{ pathname: id }} state={{ category, amount, id, type }}><img className='record__icon' src='/icons/pencil.png' alt='icon' /></Link>
       </div>
     )
   }

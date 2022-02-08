@@ -7,7 +7,7 @@ import './Header.scss';
 
 import history from '../../history';
 
-const LandingPage = (props) => {
+const LandingPage = ({ auth, userData }) => {
 
   const logout = () => {
     Cookies.remove('login');
@@ -18,16 +18,19 @@ const LandingPage = (props) => {
 
   return (
     <div className='header'>
-      {props.auth ? 
-        <h2 className='header__balance'>
-          {props.userData.balance} Kč
-        </h2> 
+      {auth ? 
+        <div className='header__balance'>
+          <img src='/icons/balance.png' className='header__home-icon' alt='home-icon' />
+          <h2 className='header__balance-header'>
+            {userData.balance + ` ${userData.currency}`}
+          </h2> 
+        </div>
       : 
         <Link className='header__home' to="/">
           <img src='/icons/home.png' className='header__home-icon' alt='home-icon' />
         </Link>
       }
-      {props.auth ? 
+      {auth ? 
         <nav>
           <Link className='btn__long-white header__logout' to="/" onClick={() => logout()}>
             <h3>Logout</h3>

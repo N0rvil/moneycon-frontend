@@ -27,15 +27,23 @@ const App = () => {
   const [auth, setAuth] = useState(false);
   const [userData, setUserData] = useState({});
 
-useEffect(() => {
-  if (Cookies.get('login')) {
-    let authData = {
-      query: `
-        query {
-          getSession(token: "${Cookies.get('login')}") {
+  const setGlobalCurrency = (curr) => {
+    setUserData({
+      ...userData,
+      currency: curr
+    })
+  }
+  
+  useEffect(() => {
+    if (Cookies.get('login')) {
+      let authData = {
+        query: `
+          query {
+            getSession(token: "${Cookies.get('login')}") {
               creator {
                 _id
                 balance
+                currency
               }
           }
         }
@@ -58,6 +66,7 @@ useEffect(() => {
         setUserData({ 
           _id: resData.data.data.getSession.creator._id,
           balance: resData.data.data.getSession.creator.balance,
+          currency: resData.data.data.getSession.creator.currency
         })
         setAuth(true);
       })
@@ -77,11 +86,12 @@ useEffect(() => {
             {auth ? <Route path='/signin' element={<Error />} exact /> : <Route path='/signin' element={<SignIn />} exact />}     
             {auth ? <Route path='/income' element={<Income userData={userData} />} exact /> : <Route path='/income' element={<Error />} exact />}
             {auth ? <Route path='/income/:id' element={<EditRecord />} exact /> : <Route path='/income/:id' element={<Error />} exact />}
-            {auth ? <Route path='/spendings' element={<Spendings />} exact /> : <Route path='/spendings' element={<Error />} exact />}
-            {auth ? <Route path='/overallLook' element={<OverallLook />} exact /> : <Route path='/overallLook' element={<Error />} exact />}
+            {auth ? <Route path='/spendings/:id' element={<EditRecord />} exact /> : <Route path='/spendings/:id' element={<Error />} exact />}
+            {auth ? <Route path='/spendings' element={<Spendings userData={userData} />} exact /> : <Route path='/spendings' element={<Error />} exact />}
+            {auth ? <Route path='/overallLook' element={<OverallLook userData={userData} />} exact /> : <Route path='/overallLook' element={<Error />} exact />}
             {auth ? <Route path='/addrecord' element={<AddRecord userData={userData} />} exact /> : <Route path='/addrecord' element={<Error />} exact />}
             {auth ? <Route path='/settings/addcategory' element={<AddCategory userData={userData} />} exact /> : <Route path='/settings/addcategory' element={<Error />} exact />}
-            {auth ? <Route path='/settings' element={<Settings />} exact /> : <Route path='/settings' element={<Error />} exact />}
+            {auth ? <Route path='/settings' element={<Settings userData={userData} setGlobalCurrency={setGlobalCurrency} />} exact /> : <Route path='/settings' element={<Error />} exact />}
             <Route path='*' element={<Error />} />         
           </Routes>
         </main>

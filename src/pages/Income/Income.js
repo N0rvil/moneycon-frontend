@@ -15,7 +15,7 @@ import history from '../../history';
 import './Income.scss';
 
 
-const Income = () => {
+const Income = ({ userData }) => {
   const [records, setRecords] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -24,6 +24,8 @@ const Income = () => {
     getRecords();
     getCategories();
   }, [])
+
+  console.log(userData)
 
   const getRecords = () => {
     if (Cookies.get('login')) {
@@ -62,7 +64,7 @@ const Income = () => {
         let data = {
           query: `
             query {
-              getCategories {
+              getIncomeCategories {
                 _id
                 name
                 color
@@ -81,7 +83,7 @@ const Income = () => {
           }
           })
           .then(resData => {
-            const newData = resData.data.data.getCategories.map(x => ({
+            const newData = resData.data.data.getIncomeCategories.map(x => ({
               ...x,
               amount: 0,
             }))
@@ -95,7 +97,7 @@ const Income = () => {
   const renderRecords = () => {
     if (records) {
       return records.map((record, i) => {
-        return <Record id={record._id} type={record.type} category={record.category} amount={record.amount} date={euDate(record.date)} key={i} />
+        return <Record id={record._id} type={record.type} category={record.category} amount={record.amount} date={euDate(record.date)} key={i}  currency={userData.currency} />
       })
     } else {
       return
@@ -153,22 +155,22 @@ const Income = () => {
       }
     })
     return categories.map((category, i) => {
-      return <Category category={category.name} amount={category.amount} percentage={Math.round((100/(count/category.amount)) * 10) / 10} color={category.color} key={i} />
+      return <Category category={category.name} amount={category.amount} percentage={Math.round((100/(count/category.amount)) * 10) / 10} color={category.color} key={i} currency={userData.currency} />
     })
   }
 
-  const RADIAN = Math.PI / 180;
-  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-  return (
-    <text x={x} y={y} fill="white" style={{ fontSize: '18px', fontWeight: 'bold' }} textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-      {`${(percent * 100).toFixed(1)}%`}
-    </text>
-  );
-};
+  // const RADIAN = Math.PI / 180;
+  // const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+  // const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+  // const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  // const y = cy + radius * Math.sin(-midAngle * RADIAN);
+ 
+  // return (
+  //   <text x={x} y={y} fill="white" style={{ fontSize: '18px', fontWeight: 'bold' }} textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+  //     {`${(percent * 100).toFixed(1)}%`}
+  //   </text>
+  //   );
+  // };
 
     return (
       <div className='income'>
@@ -177,13 +179,13 @@ const Income = () => {
           <h1 className='income__chart-header'>Last 30 days</h1>
           <PieChart className='income__chart-container' width={500} height={400}>
           <text x={'50%'} y={'50%'} textAnchor="middle" dominantBaseline="middle" style={{ fontSize: '30px', fontWeight: 'bold' }} fill='white'>
-            {overallCount()}
+            {overallCount() + ` ${userData.currency}`}
           </text>
             <Pie
               fontSize={'100'}
-              data={categories}
+              data={records.length === 0 ? [{amount: 1}] : categories}
               labelLine={false}
-              label={renderCustomizedLabel}
+              // label={renderCustomizedLabel}
               cx={'50%'}
               cy={'50%'}
               innerRadius={120}
@@ -192,8 +194,10 @@ const Income = () => {
               dataKey="amount"
               stroke='none'
             >
-            {categories.map((category, index) => (
-              <Cell key={`cell-${index}`} fill={category.color} />
+            { records.length === 0 ? [{amount: 1}].map((category, index) => (
+              <Cell key={`cell-${index}`} fill={'#FFF'} isAnimationActive={false} />
+            )) : categories.map((category, index) => (
+              <Cell key={`cell-${index}`} fill={ category.color ? category.color : '#FF7121'} isAnimationActive={false} />
             ))}
             </Pie>
           </PieChart>
@@ -203,7 +207,7 @@ const Income = () => {
         </section>
         <section className='income__record'>
           {renderRecords()}
-          <Link className='income__add-button btn__small-lightorange' to='/addrecord'>Add +</Link>
+          <Link to={{ pathname: '/addrecord' }} state={{ type: 'income' }} className='income__add-button btn__small-lightorange'>Add +</Link>
         </section>
         </div>
       </div>

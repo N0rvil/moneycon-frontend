@@ -6,22 +6,54 @@
     justify-content: space-around;
     align-items: center;
 
+    
+
     &__header {
         font-size: 2rem;
         color: $color-text-primary;
     }
 
     &__box {
-        height: 70vh;
-        width: 20vw;
-        box-shadow: $color-black 0px 10px 30px 5px;
+        height: 80vh;
+        width: 28vw;
+        box-shadow: $color-black 2px 1px 15px -3px;
         border-radius: 5rem;
+
+        &-currency {
+            width: 80%;
+            margin: 2.5rem auto 0 auto;
+
+            &--header {
+                font-size: 2rem;
+                color: $color-text-primary;
+                margin-bottom: 1rem;
+            }
+    
+            &--select {
+                width: 28rem;
+                height: 5.5rem;
+                border-radius: 100rem;
+                font-size: 2.5rem;
+                padding: .6rem;
+                outline: none;
+                background-color: $color-primary;
+                border: 0.4rem solid $color-secondary;
+                color: $color-text-primary;
+            }
+
+            &--box {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
 
         &-categories {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-around;
+            width: 22vw;
         }
     }
 

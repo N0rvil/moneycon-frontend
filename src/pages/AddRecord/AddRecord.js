@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 //components
 import FormInput from '../../components/FormInput/FormInput';
 import SubmitButton from '../../components/SubmitButton/SubmitButton';
@@ -14,49 +14,69 @@ import './AddRecord.scss';
 import '../../styles/buttons.scss';
 
 const AddRecord = () => {
-    const [category, setCategory] = useState('sallary');
+    const { state } = useLocation();
+    const [category, setCategory] = useState('');
     const [amount, setAmout] = useState(0);
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-      getCategories();
-    }, [])
 
-    const getCategories = () => {
-      if (Cookies.get('login')) {
-          let data = {
-            query: `
-              query {
-                getCategories {
-                  _id
-                  name
+      const getCategories = () => {
+        if (Cookies.get('login')) {
+          let data
+          if (state.type === 'income') {
+            data = {
+              query: `
+                query {
+                  getIncomeCategories {
+                    _id
+                    name
+                  }
                 }
+              `
+            };
+          } else {
+            data = {
+              query: `
+                query {
+                  getSpendingsCategories {
+                    _id
+                    name
+                  }
+                }
+              `
+            };
+          }
+            
+          
+            axios({
+              method: 'POST',
+              url: `http://localhost:3005/graphql`,
+              data: data,
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + Cookies.get('login'),
               }
-            `
-          };
-        
-          axios({
-            method: 'POST',
-            url: `http://localhost:3005/graphql`,
-            data: data,
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + Cookies.get('login'),
-            }
-            })
-            .then(resData => {
-              setCategories(resData.data.data.getCategories)
-            })
-            .catch(err => console.log(err));
-      }
-  }
+              })
+              .then(resData => {
+                setCategory(state.type === 'income' ? resData.data.data.getIncomeCategories[0].name : resData.data.data.getSpendingsCategories[0].name)
+                setCategories(state.type === 'income' ? resData.data.data.getIncomeCategories : resData.data.data.getSpendingsCategories)
+              })
+              .catch(err => console.log(err));
+        }
+    }
+      getCategories();
+    }, [state.type])
+  
+
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
         let data = {
             query: `
             mutation {
-                createRecord(recordInput: {type: "income", category: "${category}", amount: ${parseInt(amount)}, date: "${new Date().toISOString()}"}) {
+                createRecord(recordInput: {type: "${state.type}", category: "${category}", amount: ${parseInt(amount)}, date: "${new Date().toISOString()}"}) {
                     _id
                     }
                 }
@@ -76,7 +96,12 @@ const AddRecord = () => {
                 if (!resData.data.data.createRecord._id) {
                     throw new Error('Something went wrong');
                 }
-                history.push('/income');
+                if (state.type === 'income') {
+                  history.push('/income');
+                }
+                else {
+                  history.push('/spendings');
+                }
                 window.location.reload();
             })
             .catch(err => console.log(err));
@@ -103,7 +128,7 @@ const AddRecord = () => {
         </div>
         <div className='addrecord__box'>
           <SubmitButton text='Add +' />
-          <Link className='cancelbutton' to='/income'>Cancel</Link>
+          <Link className='cancelbutton' to={state.type === 'income' ? '/income' : '/spendings'}>Cancel</Link>
         </div>
         </form>
       </div>

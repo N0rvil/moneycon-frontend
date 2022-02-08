@@ -20,39 +20,55 @@ const EditRecord = () => {
   const [category, setCategory] = useState(state.category);
   const [categories, setCategories] = useState([]);
 
+
   useEffect(() => {
-    getCategories();
-  }, []);
-
-  const getCategories = () => {
-    if (Cookies.get('login')) {
-        let data = {
-          query: `
-            query {
-              getCategories {
-                _id
-                name
+    const getCategories = () => {
+      if (Cookies.get('login')) {
+        let data
+        if (state.type === 'income') {
+          data = {
+            query: `
+              query {
+                getIncomeCategories {
+                  _id
+                  name
+                }
               }
+            `
+          };
+        } else {
+          data = {
+            query: `
+              query {
+                getSpendingsCategories {
+                  _id
+                  name
+                }
+              }
+            `
+          };
+        }
+          
+          axios({
+            method: 'POST',
+            url: `http://localhost:3005/graphql`,
+            data: data,
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + Cookies.get('login'),
             }
-          `
-        };
-      
-        axios({
-          method: 'POST',
-          url: `http://localhost:3005/graphql`,
-          data: data,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + Cookies.get('login'),
-          }
-          })
-          .then(resData => {
-            setCategories(resData.data.data.getCategories)
-          })
-          .catch(err => console.log(err));
-    }
+            })
+            .then(resData => {
+              setCategory(state.type === 'income' ? resData.data.data.getIncomeCategories[0].name : resData.data.data.getSpendingsCategories[0].name)
+              setCategories(state.type === 'income' ? resData.data.data.getIncomeCategories : resData.data.data.getSpendingsCategories)
+            })
+            .catch(err => console.log(err));
+      }
   }
+    getCategories();
+  }, [state.type]);
 
+  
   const renderCategories = () => {
     return categories.map((category, i) => {
       return <option value={category.name} key={i}>{category.name}</option>
@@ -86,7 +102,12 @@ const EditRecord = () => {
           if (!resData.data.data.editRecord) {
             throw new Error('Something went wrong');
         }
-          history.push('/income')
+          if (state.type === 'income') {
+            history.push('/income');
+          }
+          else {
+            history.push('/spendings');
+          }
           window.location.reload();
         })
         .catch(err => console.log(err));
@@ -121,7 +142,13 @@ const EditRecord = () => {
             throw new Error('Something went wrong');
           }
           setId('x');
-          history.push('/income')
+          if (state.type === 'income') {
+            history.push('/income');
+          }
+          else {
+            history.push('/spendings');
+          }
+          
           window.location.reload();
         })
         .catch(err => console.log(err));
@@ -143,7 +170,7 @@ const EditRecord = () => {
       </div>
       <div className='editrecord__box'>
         <SubmitButton text='Edit' />
-        <Link className='cancelbutton' to='/income'>Cancel</Link>
+        <Link className='cancelbutton' to={ state.type === 'income' ? '/income' : '/spendings' }>Cancel</Link>
       </div>
       <button className='deletebutton' onClick={() => deleteRecord()}>Delete</button>
       </form>

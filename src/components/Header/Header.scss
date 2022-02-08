@@ -10,6 +10,18 @@
     padding: 0 5rem 0 5rem;
     grid-column: 1 / 3;
 
+    &__balance {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-width: 20rem;
+
+        &-header {
+            color: $color-text-primary;
+            font-size: 3rem;
+        }
+    }
+
     &__nav {
         width: 30rem;
         display: flex;
@@ -31,11 +43,6 @@
 
     &__home-icon {
         height: 5rem;
-    }
-
-    &__balance {
-        color: $color-text-primary;
-        font-size: 3rem;
     }
 
     &__logout {

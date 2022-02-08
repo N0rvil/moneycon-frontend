@@ -10,23 +10,27 @@ import Cookies from 'js-cookie'
 import './Settings.scss'
 import '../../styles/buttons.scss';
 
-const Settings = () => {
+const Settings = ({ userData, setGlobalCurrency }) => {
 
-  const [categories, setCategories] = useState([]);
+  const [incomeCategories, setIncomeCategories] = useState([]);
+  const [spendingsCategories, setSpendingsCategories] = useState([]);
+  const [currency, setCurrency] = useState(userData.currency);
 
     useEffect(() => {
-      getCategories();
+      getSpendingsCategories();
+      getIncomeCategories();
     }, [])
 
 
-    const getCategories = () => {
+    const getIncomeCategories = () => {
         if (Cookies.get('login')) {
             let data = {
               query: `
                 query {
-                  getCategories {
+                  getIncomeCategories {
                     _id
                     name
+                    type
                   }
                 }
               `
@@ -42,18 +46,48 @@ const Settings = () => {
               }
               })
               .then(resData => {
-                setCategories(resData.data.data.getCategories)
+                setIncomeCategories(resData.data.data.getIncomeCategories)
               })
               .catch(err => console.log(err));
         }
     }
 
-    const deleteCategory = (categoryId) => {
-      console.log(categoryId)
+    const getSpendingsCategories = () => {
+      if (Cookies.get('login')) {
+          let data = {
+            query: `
+              query {
+                getSpendingsCategories {
+                  _id
+                  name
+                  type
+                }
+              }
+            `
+          };
+        
+          axios({
+            method: 'POST',
+            url: `http://localhost:3005/graphql`,
+            data: data,
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + Cookies.get('login'),
+            }
+            })
+            .then(resData => {
+              setSpendingsCategories(resData.data.data.getSpendingsCategories)
+            })
+            .catch(err => console.log(err));
+      }
+  }
+
+  const deleteCategory = (categoryId, type) => {
+    if (Cookies.get('login')) {
       let data = {
         query: `
         mutation {
-            deleteCategory(categoryId: "${categoryId}") {
+            deleteCategory(deleteCategoryInput: {id: "${categoryId}", type: "${type}"}) {
                 _id
                 name
                 }
@@ -74,17 +108,64 @@ const Settings = () => {
             if (!resData.data.data.deleteCategory) {
                 throw new Error('Something went wrong');
             }
-          setCategories(resData.data.data.deleteCategory)
+            if (type === 'income') {
+              setIncomeCategories(resData.data.data.deleteCategory)
+            } else {
+              setSpendingsCategories(resData.data.data.deleteCategory)
+            }
         })
         .catch(err => console.log(err));
+      }
     }
 
-    const renderCategories = () => {
-      return categories.map((category, i) => {
+  const changeCurrency = (e) => {
+    e.preventDefault();
+    if (Cookies.get('login')) {
+      let data = {
+        query: `
+        mutation {
+            changeCurrency(changeCurrencyInput: {currency: "${currency}"}) {
+                _id
+                currency
+                }
+            }
+        `
+      };
+
+    axios({
+        method: 'POST',
+        url: `http://localhost:3005/graphql`,
+        data: data,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + Cookies.get('login'),
+        }
+        })
+        .then(resData => {
+           setCurrency(resData.data.data.changeCurrency.currency);
+           setGlobalCurrency(resData.data.data.changeCurrency.currency);
+        })
+        .catch(err => console.log(err));
+      }
+    }
+
+    const renderIncomeCategories = () => {
+      return incomeCategories.map((category, i) => {
         return (
           <div className='settings__category' key={i}>
             <h3 className='settings__category-name'>{category.name}</h3>
-            <button onClick={() => deleteCategory(category._id)} className='btn__small-red'>delete</button>
+            <button onClick={() => deleteCategory(category._id, 'income')} className='btn__small-red'>delete</button>
+          </div>
+        )
+      })
+    }
+
+    const renderSpendingsCategories = () => {
+      return spendingsCategories.map((category, i) => {
+        return (
+          <div className='settings__category' key={i}>
+            <h3 className='settings__category-name'>{category.name}</h3>
+            <button onClick={() => deleteCategory(category._id, 'spendings')} className='btn__small-red'>delete</button>
           </div>
         )
       })
@@ -92,16 +173,29 @@ const Settings = () => {
   
     return (
       <div className='settings'>
+        <div className='settings__box'>
+          <form className='settings__box-currency' onSubmit={e => changeCurrency(e)}>
+            <h3 className='settings__box-currency--header'>Měna</h3>
+            <div className='settings__box-currency--box'>
+              <select className='settings__box-currency--select' name="category" id="category" value={currency} onChange={(e) => setCurrency(e.target.value)}>
+                <option value='$'>USD $</option>
+                <option value='€'>EUR €</option>
+                <option value='Kč'>CZK Kč</option>
+                <option value='₽'>RUB ₽</option>
+              </select>
+              <button type='submit' className='setbutton'>set</button>
+            </div>
+          </form>
+        </div>
         <div className='settings__box settings__box-categories'>
-          <h3 className='settings__header'>Categories</h3>
-          <div className='settings__list'>{renderCategories()}</div>
-          <Link to='addcategory' className='btn__small-lightorange'>Add +</Link>
+          <h3 className='settings__header'>Income categories</h3>
+          <div className='settings__list'>{renderIncomeCategories()}</div>
+          <Link to={{ pathname: 'addcategory' }} state={{ type: 'income' }} className='btn__small-lightorange'>Add +</Link>
         </div>
-        <div className='settings__box'>
-          
-        </div>
-        <div className='settings__box'>
-          
+        <div className='settings__box settings__box-categories'>
+          <h3 className='settings__header'>Spendings categories</h3>
+          <div className='settings__list'>{renderSpendingsCategories()}</div>
+          <Link to={{ pathname: 'addcategory' }} state={{ type: 'spendings' }} className='btn__small-lightorange'>Add +</Link>
         </div>
       </div>
     )

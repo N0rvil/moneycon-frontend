@@ -1,0 +1,33 @@
+.moneybar {
+    width: 90%;
+    height: 25%;
+
+    &__box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__header {
+        margin-bottom: 2rem;
+        font-size: 2.2rem;
+        text-transform: uppercase;
+    }
+
+    &__money {
+        text-align: center;
+        width: 30%;
+        font-size: 2rem;
+    }
+
+    &__bar {
+        width: 100%;
+        height: 6rem;
+
+        &-bar {
+            height: 6rem;
+            border-radius: 1rem;
+            z-index: 10;
+        }
+    }
+}

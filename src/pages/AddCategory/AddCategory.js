@@ -1,6 +1,6 @@
 //thirtparty 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 //components
@@ -14,18 +14,17 @@ import './AddCategory.scss';
 import '../../styles/buttons.scss';
 
 const AddCategory = () => {
+    const { state } = useLocation();
     const [name, setName] = useState('');
-    const [color, setColor] = useState('');
+    const [color, setColor] = useState('#000000');
     const [err, setErr] = useState('');
-    
-    
 
     const handleSubmit = (e) => {
         e.preventDefault();
         let data = {
             query: `
             mutation {
-                createCategory(categoryInput: {name: "${name}", color: "${color}"}) {
+                createCategory(categoryInput: {name: "${name}", color: "${color}", type: "${state.type}"}) {
                     _id
                     }
                 }
@@ -71,7 +70,7 @@ const AddCategory = () => {
             </div>
             <div className='addcategory__box'>
                 <SubmitButton text='Add +' />
-                <Link className='cancelbutton' to='/income'>Cancel</Link>
+                <Link className='cancelbutton' to='/settings'>Cancel</Link>
             </div>
         </form>
       </div>
