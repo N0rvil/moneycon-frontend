@@ -44,7 +44,7 @@ const SignIn = () => {
 
     axios({
       method: 'POST',
-      url: `http://localhost:3005/graphql`,
+      url: `${url}/graphql`,
       data: signinData,
       headers: {
         'Content-Type': 'application/json'

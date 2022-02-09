@@ -9,6 +9,7 @@ import Record from '../../components/Record/Record';
 import Category from '../../components/Category/Category';
 //pages
 //others
+import { url } from '../../url';
 import { euDate } from '../../dateFormater';
 //styles
 import './Spendings.scss';
@@ -42,7 +43,7 @@ const Spendings = ({ userData }) => {
     
       axios({
         method: 'POST',
-        url: `http://localhost:3005/graphql`,
+        url: `${url}/graphql`,
         data: data,
         headers: {
           'Content-Type': 'application/json',
@@ -72,7 +73,7 @@ const Spendings = ({ userData }) => {
       
         axios({
           method: 'POST',
-          url: `http://localhost:3005/graphql`,
+          url: `${url}/graphql`,
           data: data,
           headers: {
             'Content-Type': 'application/json',

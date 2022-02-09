@@ -60,7 +60,7 @@ const SingUp = () => {
 
       axios({
         method: 'POST',
-        url: `http://localhost:3005/graphql`,
+        url: `${url}/graphql`,
         data: signupData,
         })
         .then(res => {
@@ -71,7 +71,7 @@ const SingUp = () => {
             setError('')
             axios({
               method: 'POST',
-              url: `http://localhost:3005/graphql`,
+              url: `${url}/graphql`,
               data: signinData,
               headers: {
                 'Content-Type': 'application/json'

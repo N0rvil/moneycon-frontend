@@ -52,7 +52,7 @@ const App = () => {
   
     axios({
       method: 'POST',
-      url: `http://localhost:3005/graphql`,
+      url: `${url}/graphql`,
       data: authData,
       headers: {
         'Content-Type': 'application/json',

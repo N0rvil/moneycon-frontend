@@ -51,7 +51,7 @@ const EditRecord = () => {
           
           axios({
             method: 'POST',
-            url: `http://localhost:3005/graphql`,
+            url: `${url}/graphql`,
             data: data,
             headers: {
               'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ const EditRecord = () => {
     
       axios({
         method: 'POST',
-        url: `http://localhost:3005/graphql`,
+        url: `${url}/graphql`,
         data: data,
         headers: {
           'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ const EditRecord = () => {
     
       axios({
         method: 'POST',
-        url: `http://localhost:3005/graphql`,
+        url: `${url}/graphql`,
         data: data,
         headers: {
           'Content-Type': 'application/json',
