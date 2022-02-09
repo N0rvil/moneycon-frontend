@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import { PieChart, Pie, Cell } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 //components
 import Record from '../../components/Record/Record';
 import Category from '../../components/Category/Category';
@@ -19,11 +19,13 @@ import './Income.scss';
 const Income = ({ userData }) => {
   const [records, setRecords] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [width, setWidth] = useState(null);
 
   useEffect(() => {
     history.push('/income')
     getRecords();
     getCategories();
+    setWidth(window.innerWidth);
   }, [])
 
   console.log(userData)
@@ -178,7 +180,8 @@ const Income = ({ userData }) => {
         <div className='income__box'>
         <section className='income__chart'>
           <h1 className='income__chart-header'>Last 30 days</h1>
-          <PieChart className='income__chart-container' width={500} height={400}>
+          <ResponsiveContainer width={'90%'} height={'60%'}>
+          <PieChart className='income__chart-container'>
           <text x={'50%'} y={'50%'} textAnchor="middle" dominantBaseline="middle" style={{ fontSize: '30px', fontWeight: 'bold' }} fill='white'>
             {overallCount() + ` ${userData.currency}`}
           </text>
@@ -189,8 +192,8 @@ const Income = ({ userData }) => {
               // label={renderCustomizedLabel}
               cx={'50%'}
               cy={'50%'}
-              innerRadius={120}
-              outerRadius={200}
+              innerRadius={width < 1800 ? 90 : 120}
+              outerRadius={width < 1800 ? 160 : 200}
               paddingAngle={0}
               dataKey="amount"
               stroke='none'
@@ -202,6 +205,7 @@ const Income = ({ userData }) => {
             ))}
             </Pie>
           </PieChart>
+          </ResponsiveContainer>
         </section>
         <section className='income__category'>
           {renderCategories()}

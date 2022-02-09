@@ -17,10 +17,12 @@ import './Spendings.scss';
 const Spendings = ({ userData }) => {
   const [records, setRecords] = useState([]);
   const [categories, setCategories] = useState([]); 
+  const [width, setWidth] = useState(null);
 
   useEffect(() => {
     getRecords();
     getCategories();
+    setWidth(window.innerWidth);
   }, [])
 
   console.log(records)
@@ -171,8 +173,8 @@ const Spendings = ({ userData }) => {
               labelLine={false}
               cx={'50%'}
               cy={'50%'}
-              innerRadius={120}
-              outerRadius={200}
+              innerRadius={width < 1800 ? 90 : 120}
+              outerRadius={width < 1800 ? 160 : 200}
               paddingAngle={0}
               dataKey="amount"
               stroke='none'
