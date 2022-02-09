@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie'
 //components
+import FormInput from '../../components/FormInput/FormInput';
 //pages
 //others
 //styles
@@ -15,6 +16,10 @@ const Settings = ({ userData, setGlobalCurrency }) => {
   const [incomeCategories, setIncomeCategories] = useState([]);
   const [spendingsCategories, setSpendingsCategories] = useState([]);
   const [currency, setCurrency] = useState(userData.currency);
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [newPasswordAgain, setNewPasswordAgain] = useState('');
+  const [message, setMessage] = useState('');
 
     useEffect(() => {
       getSpendingsCategories();
@@ -149,6 +154,60 @@ const Settings = ({ userData, setGlobalCurrency }) => {
       }
     }
 
+    const setMesageInterval = (text) => {
+      setMessage(text)
+      setTimeout(() => {
+        setMessage('');
+      }, 5000)
+    }
+
+    const changePassword = (e) => {
+      e.preventDefault();
+      if (Cookies.get('login')) {
+        console.log(newPassword.length)
+        if (newPassword.length !== 0) {
+          if (newPassword === newPasswordAgain) {
+            let data = {
+              query: `
+              mutation {
+                  changePassword(changePasswordInput: {oldPassword: "${oldPassword}", newPassword: "${newPassword}"}) {
+                      _id
+                      }
+                  }
+              `
+            };
+      
+            axios({
+              method: 'POST',
+              url: `http://localhost:3005/graphql`,
+              data: data,
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + Cookies.get('login'),
+              }
+              })
+              .then(resData => {
+                console.log(resData.data.data)
+                if (resData.data.data.changePassword) {
+                  setOldPassword('')
+                  setNewPassword('')
+                  setNewPasswordAgain('')
+                  setMesageInterval('password changed')
+                } else {
+                  setMesageInterval('wrong password')
+                }
+                
+              })
+              .catch(err => console.log(err));
+          } else {
+            setMesageInterval('new password does not match')
+          }
+        } else {
+          setMesageInterval('please enter new password')
+        }
+      }
+    }
+
     const renderIncomeCategories = () => {
       return incomeCategories.map((category, i) => {
         return (
@@ -175,7 +234,7 @@ const Settings = ({ userData, setGlobalCurrency }) => {
       <div className='settings'>
         <div className='settings__box'>
           <form className='settings__box-currency' onSubmit={e => changeCurrency(e)}>
-            <h3 className='settings__box-currency--header'>Měna</h3>
+            <h3 className='settings__box-currency--header'>Currency</h3>
             <div className='settings__box-currency--box'>
               <select className='settings__box-currency--select' name="category" id="category" value={currency} onChange={(e) => setCurrency(e.target.value)}>
                 <option value='$'>USD $</option>
@@ -185,6 +244,14 @@ const Settings = ({ userData, setGlobalCurrency }) => {
               </select>
               <button type='submit' className='setbutton'>set</button>
             </div>
+          </form>
+          <form className='settings__box-password' onSubmit={e => changePassword(e)}>
+            <h3 className='settings__box-password--header'>Change password</h3>
+            <FormInput type='password' placeholder='Old password' size='small' setValue={setOldPassword} value={oldPassword} />
+            <FormInput type='password' placeholder='New password' size='small' setValue={setNewPassword} value={newPassword} />
+            <FormInput type='password' placeholder='New password again' size='small' setValue={setNewPasswordAgain} value={newPasswordAgain} />
+            <button type='submit' className='settings__box-password--button'>Change password</button>
+            <h3 className='settings__box-password--message'>{message}</h3>
           </form>
         </div>
         <div className='settings__box settings__box-categories'>

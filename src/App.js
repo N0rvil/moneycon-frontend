@@ -33,7 +33,7 @@ const App = () => {
       currency: curr
     })
   }
-  
+
   useEffect(() => {
     if (Cookies.get('login')) {
       let authData = {

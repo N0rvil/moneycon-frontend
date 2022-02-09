@@ -13,14 +13,24 @@
     }
 
     &__input {
-        width: 32rem;
-        height: 5.5rem;
         border-radius: 100rem;
-        font-size: 2.5rem;
         padding: 1rem;
         outline: none;
         background-color: $color-primary;
         border: 0.4rem solid $color-secondary;
         color: $color-text-primary;
+
+        &-normal {
+            width: 32rem;
+            height: 5.5rem;
+            font-size: 2.5rem;
+        }
+
+        &-small {
+            width: 28rem;
+            height: 4rem;
+            font-size: 1.8rem;
+            margin: 0.4rem;
+        }
     }
 }
