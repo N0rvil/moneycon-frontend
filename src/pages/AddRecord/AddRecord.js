@@ -9,6 +9,7 @@ import SubmitButton from '../../components/SubmitButton/SubmitButton';
 //pages
 //others
 import history from '../../history';
+import { url } from '../../url';
 //styles
 import './AddRecord.scss';
 import '../../styles/buttons.scss';

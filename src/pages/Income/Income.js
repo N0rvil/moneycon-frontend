@@ -10,6 +10,7 @@ import Category from '../../components/Category/Category';
 //pages
 //others
 import { euDate } from '../../dateFormater';
+import { url } from '../../url';
 import history from '../../history';
 //styles
 import './Income.scss';

@@ -18,6 +18,8 @@ import Error from './pages/Error/Error';
 
 import Header from './components/Header/Header';
 
+import { url } from '../../url';
+
 import history from './history';
 
 import './App.scss';

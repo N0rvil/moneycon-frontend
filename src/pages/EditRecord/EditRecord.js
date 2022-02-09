@@ -9,6 +9,7 @@ import FormInput from '../../components/FormInput/FormInput';
 //pages
 //others
 import history from '../../history';
+import { url } from '../../url';
 //styles
 import './EditRecord.scss';
 import '../../styles/buttons.scss';

@@ -7,6 +7,7 @@ import { LineChart, CartesianGrid, XAxis, YAxis, Line, Tooltip, ResponsiveContai
 import MoneyBar from '../../components/MoneyBar/MoneyBar';
 //pages
 //others
+import { url } from '../../url';
 import { euDate } from '../../dateFormater';
 //styles
 import './OverallLook.scss'

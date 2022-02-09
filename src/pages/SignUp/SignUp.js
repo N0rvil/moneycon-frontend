@@ -8,6 +8,7 @@ import SubmitButton from '../../components/SubmitButton/SubmitButton';
 //pages
 //others 
 import history from '../../history';
+import { url } from '../../url';
 //styles
 import './SignUp.scss';
 //others 

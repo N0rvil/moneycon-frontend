@@ -7,6 +7,7 @@ import Cookies from 'js-cookie'
 import FormInput from '../../components/FormInput/FormInput';
 //pages
 //others
+import { url } from '../../url';
 //styles
 import './Settings.scss'
 import '../../styles/buttons.scss';
