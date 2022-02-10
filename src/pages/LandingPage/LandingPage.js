@@ -8,7 +8,7 @@ const LandingPage = () => {
     <div className='landingpage'>
       <div className='landingpage__box'>
         <div className='landingpage__frame'>
-          <h1 className='landingpage__header'>Know where your money go</h1>
+          <h1 className='landingpage__header'>Know where your money goes</h1>
         </div>
         <Link className='btn__medium-orange' to='/signup'>
           Start now 
