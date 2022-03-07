@@ -19,10 +19,10 @@ const Info = () => {
                     the more secure is your account is. E-mail verification is not required. 
                 </p>
             </div>
-            <img src='/images/signup.png' alt='image' className='info__image' />
+            <img src='./images/signup.png' alt='image' className='info__image' />
         </div>
         <div className='info__container'>
-            <img src='/images/categories.png' alt='image' className='info__image' />
+            <img src='./images/categories.png' alt='image' className='info__image' />
             <div className='info__box'>
                 <h2 className='info__header'>2. Create categories</h2>
                 <p className='info__text'>
@@ -43,10 +43,10 @@ const Info = () => {
                     see records from last 30 days. You can easily edit them by clicking on a small pen icon.
                 </p>
             </div>
-            <img src='/images/records.png' alt='image' className='info__image' />
+            <img src='./images/records.png' alt='image' className='info__image' />
         </div>
         <div className='info__container'>
-        <img src='/images/settings.png' alt='image' className='info__image' />
+        <img src='./images/settings.png' alt='image' className='info__image' />
             <div className='info__box'>
                 <h2 className='info__header'>4. Settings</h2>
                 <p className='info__text'>
