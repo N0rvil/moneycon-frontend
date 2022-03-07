@@ -26,9 +26,14 @@ const LandingPage = ({ auth, userData }) => {
           </h2> 
         </div>
       : 
-        <Link className='header__home' to="/">
+      <div className='header__box'>
+        <Link className='header__link' to="/">
           <img src='/icons/home.png' className='header__home-icon' alt='home-icon' />
         </Link>
+        <Link className='header__link' to="/info">
+          <img src='/icons/info.png' className='header__home-icon' alt='info-icon' />
+        </Link>
+      </div>   
       }
       {auth ? 
         <nav>
@@ -39,8 +44,8 @@ const LandingPage = ({ auth, userData }) => {
         </nav> 
       :
         <nav className='header__nav'>
-          <Link className='btn__small-lightorange' to="/signin">Sing in</Link>
-          <Link className='btn__small-white' to='signup'>Sing up</Link>
+          <Link className='btn__small-lightorange' to="/signin">Sign in</Link>
+          <Link className='btn__small-white' to='signup'>Sign up</Link>
         </nav>
       }
     </div>

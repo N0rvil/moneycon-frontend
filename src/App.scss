@@ -22,6 +22,7 @@ body {
     color: $color-black;
     background: $color-primary;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
 }
 
 .app {

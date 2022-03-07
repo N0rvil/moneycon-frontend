@@ -192,8 +192,8 @@ const Income = ({ userData }) => {
               // label={renderCustomizedLabel}
               cx={'50%'}
               cy={'50%'}
-              innerRadius={width < 1800 ? 90 : 120}
-              outerRadius={width < 1800 ? 160 : 200}
+              innerRadius={width < 1800 ? width < 1500 ? 70 : 90 : 120}
+              outerRadius={width < 1800 ? width < 1500 ? 130 : 160 : 200}
               paddingAngle={0}
               dataKey="amount"
               stroke='none'

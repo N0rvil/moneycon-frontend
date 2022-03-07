@@ -23,6 +23,10 @@
         font-weight: 600;
     }
 
+    &__date {
+        margin-right: 1.5rem;
+    }
+
     &__amount {
         font-weight: 600;
         width: 14.5rem;
@@ -37,6 +41,10 @@
     }
 
     &__icon {
+        height: 2.5rem;
+    }
+
+    &__link {
         height: 2.5rem;
     }
 

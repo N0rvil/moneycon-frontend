@@ -114,7 +114,7 @@ const OverallLook = ({ userData }) => {
             <LineChart data={records}
               margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
               <CartesianGrid strokeWidth={0} />
-              <XAxis fontSize={'15'} dataKey="date" strokeWidth={3.5} stroke='#fff' />
+              <XAxis fontSize={'8'} dataKey="date" strokeWidth={3.5} stroke='#fff' />
               <YAxis fontSize={'15'} dataKey="toBalance" strokeWidth={3.5} stroke='#fff' />
               <Tooltip content={<CustomTooltip />} cursor={false} />
               <Line type="linear" dataKey="toBalance" stroke="#FF7121" strokeWidth={5} isAnimationActive={false} />

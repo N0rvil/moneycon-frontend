@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { PieChart, Pie, Cell } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 //components
 import Record from '../../components/Record/Record';
 import Category from '../../components/Category/Category';
@@ -163,6 +163,7 @@ const Spendings = ({ userData }) => {
       <div className='spendings__box'>
       <section className='spendings__chart'>
         <h1 className='spendings__chart-header'>Last 30 days</h1>
+        <ResponsiveContainer width={'90%'} height={'60%'}>
         <PieChart className='income__chart-container' width={500} height={400}>
           <text x={'50%'} y={'50%'} textAnchor="middle" dominantBaseline="middle" style={{ fontSize: '30px', fontWeight: 'bold' }} fill='white'>
             {overallCount() + ` ${userData.currency}`}
@@ -173,8 +174,8 @@ const Spendings = ({ userData }) => {
               labelLine={false}
               cx={'50%'}
               cy={'50%'}
-              innerRadius={width < 1800 ? 90 : 120}
-              outerRadius={width < 1800 ? 160 : 200}
+              innerRadius={width < 1800 ? width < 1500 ? 70 : 90 : 120}
+              outerRadius={width < 1800 ? width < 1500 ? 130 : 160 : 200}
               paddingAngle={0}
               dataKey="amount"
               stroke='none'
@@ -186,6 +187,7 @@ const Spendings = ({ userData }) => {
             ))}
             </Pie>
           </PieChart>
+          </ResponsiveContainer>
       </section>
       <section className='spendings__category'>
         {renderCategories()}

@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 
 import LandingPage from './pages/LandingPage/LandingPage';
+import Info from './pages/Info/Info';
 import SignUp from './pages/SignUp/SignUp';
 import SignIn from './pages/SignIn/SignIn';
 import MainNavigation from './components/MainNavigation/MainNavigation';
@@ -84,6 +85,7 @@ const App = () => {
         {auth ? <MainNavigation /> : null}
           <Routes className='app__content'>       
             {auth ? <Route path='/' element={<Income />} exact /> : <Route path='/' element={<LandingPage />} exact />} 
+            {auth ? <Route path='/info' element={<Error />} exact /> : <Route path='/info' element={<Info />} exact />} 
             {auth ? <Route path='/signup' element={<Error />} exact /> : <Route path='/signup' element={<SignUp />} exact />}     
             {auth ? <Route path='/signin' element={<Error />} exact /> : <Route path='/signin' element={<SignIn />} exact />}     
             {auth ? <Route path='/income' element={<Income userData={userData} />} exact /> : <Route path='/income' element={<Error />} exact />}
