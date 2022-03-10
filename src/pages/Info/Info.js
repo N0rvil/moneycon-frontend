@@ -12,7 +12,7 @@ const Info = () => {
     <div className='info'>
         <div className='info__container'>
             <div className='info__box'>
-                <h2 className='info__header'>1. Sing Up</h2>
+                <h2 className='info__header'>1. Sign Up</h2>
                 <p className='info__text'>
                     The first thing you have to do is create your account. 
                     You only need two things: your e-mail address and a strong password.

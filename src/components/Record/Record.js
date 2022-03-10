@@ -20,4 +20,6 @@ const Record = ({ id, type, category, amount, date,currency }) => {
     )
   }
   
-  export default Record;
+export default Record;
+
+
