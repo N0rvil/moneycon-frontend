@@ -68,16 +68,13 @@ const AddRecord = () => {
     }
       getCategories();
     }, [state.type])
-  
-
-    
 
     const handleSubmit = (e) => {
         e.preventDefault();
         let data = {
             query: `
             mutation {
-                createRecord(recordInput: {type: "${state.type}", category: "${category}", amount: ${parseInt(amount)}, date: "${new Date().toISOString()}"}) {
+                createRecord(recordInput: {type: "${state.type}", category: "${category}", amount: ${parseFloat(amount)}, date: "${new Date().toISOString()}"}) {
                     _id
                     }
                 }

@@ -28,8 +28,6 @@ const Income = ({ userData }) => {
     setWidth(window.innerWidth);
   }, [])
 
-  console.log(userData)
-
   const getRecords = () => {
     if (Cookies.get('login')) {
       let data = {
