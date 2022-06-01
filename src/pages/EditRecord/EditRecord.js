@@ -112,12 +112,10 @@ const EditRecord = () => {
           window.location.reload();
         })
         .catch(err => console.log(err));
-  }
-
+    }
   }
 
   const deleteRecord = () => {
-    console.log(id)
     if (Cookies.get('login')) {
       let data = {
         query: `
@@ -153,7 +151,7 @@ const EditRecord = () => {
           window.location.reload();
         })
         .catch(err => console.log(err));
-  }
+    }
   }
   
   return (

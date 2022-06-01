@@ -1,12 +1,12 @@
 //thirtparty 
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 //components
 import Record from '../../components/Record/Record';
 import Category from '../../components/Category/Category';
+import AddRecordPopup from '../../components/AddRecordPopup/AddRecordPopup';
 //pages
 //others
 import { euDate } from '../../dateFormater';
@@ -20,6 +20,8 @@ const Income = ({ userData }) => {
   const [records, setRecords] = useState([]);
   const [categories, setCategories] = useState([]);
   const [width, setWidth] = useState(null);
+  const [isPopupActive, setIsPopupActive] = useState(false);
+
 
   useEffect(() => {
     history.push('/income')
@@ -98,7 +100,17 @@ const Income = ({ userData }) => {
   const renderRecords = () => {
     if (records) {
       return records.map((record, i) => {
-        return <Record id={record._id} type={record.type} category={record.category} amount={record.amount} date={euDate(record.date)} key={i}  currency={userData.currency} />
+        return <Record 
+        changeRecord={changeRecord} 
+        removeRecord={removeRecord} 
+        index={i} id={record._id} 
+        type={record.type} 
+        category={record.category} 
+        amount={record.amount} 
+        date={euDate(record.date)} 
+        key={i}  
+        currency={userData.currency} 
+        />
       })
     } else {
       return
@@ -156,25 +168,55 @@ const Income = ({ userData }) => {
       }
     })
     return categories.map((category, i) => {
-      return <Category category={category.name} amount={category.amount} percentage={Math.round((100/(count/category.amount)) * 10) / 10} color={category.color} key={i} currency={userData.currency} />
+      return <Category 
+      category={category.name} 
+      amount={category.amount} 
+      percentage={Math.round((100/(count/category.amount)) * 10) / 10} 
+      color={category.color} 
+      key={i} 
+      currency={userData.currency} 
+      />
     })
   }
 
-  // const RADIAN = Math.PI / 180;
-  // const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-  // const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  // const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  // const y = cy + radius * Math.sin(-midAngle * RADIAN);
- 
-  // return (
-  //   <text x={x} y={y} fill="white" style={{ fontSize: '18px', fontWeight: 'bold' }} textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-  //     {`${(percent * 100).toFixed(1)}%`}
-  //   </text>
-  //   );
-  // };
+  const setPopup = () => {
+    setIsPopupActive(!isPopupActive)
+  }
+
+  const addRecord = (record) =>{
+    setRecords([...records, record]);
+  }
+
+  const removeRecord = (id) => { 
+    let newList = [];
+    records.forEach((record) => {
+      if (record._id !== id) {
+        return newList.push(record)
+      } 
+    })
+    return setRecords(newList);
+  }
+
+  const changeRecord = (id, amount, category) => {
+    let newList = [];
+    records.forEach((record) => {
+      if (record._id !== id) {
+        return newList.push(record)
+      } else {
+        const rec = record
+        rec['amount'] = parseFloat(amount);
+        rec['category'] = category;
+        console.log(rec)
+        return newList.push(rec);
+      }
+    })
+    return setRecords(newList);
+  }
+  console.log(records)
 
     return (
       <div className='income'>
+        {isPopupActive ? <AddRecordPopup closePopup={setPopup} addRecord={addRecord} type='income' /> : null}
         <div className='income__box'>
         <section className='income__chart'>
           <h1 className='income__chart-header'>Last 30 days</h1>
@@ -210,7 +252,7 @@ const Income = ({ userData }) => {
         </section>
         <section className='income__record'>
           {renderRecords()}
-          <Link to={{ pathname: '/addrecord' }} state={{ type: 'income' }} className='income__add-button btn__small-lightorange'>Add +</Link>
+          <button onClick={() => setPopup(!isPopupActive)} className='income__add-button btn__small-lightorange'>Add +</button>
         </section>
         </div>
       </div>

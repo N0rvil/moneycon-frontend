@@ -1,12 +1,12 @@
 //thirtparty 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 //components
 import Record from '../../components/Record/Record';
 import Category from '../../components/Category/Category';
+import AddRecordPopup from '../../components/AddRecordPopup/AddRecordPopup';
 //pages
 //others
 import { url } from '../../url';
@@ -18,6 +18,7 @@ const Spendings = ({ userData }) => {
   const [records, setRecords] = useState([]);
   const [categories, setCategories] = useState([]); 
   const [width, setWidth] = useState(null);
+  const [isPopupActive, setIsPopupActive] = useState(false);
 
   useEffect(() => {
     getRecords();
@@ -157,9 +158,18 @@ const Spendings = ({ userData }) => {
       return <Category category={category.name} amount={category.amount} percentage={Math.round((100/(count/category.amount)) * 10) / 10} color={category.color} key={i} currency={userData.currency} />
     })
   }
+
+  const setPopup = () => {
+    setIsPopupActive(!isPopupActive)
+  }
+
+  const addRecord = (record) =>{
+    setRecords([...records, record]);
+  }
   
   return (
     <div className='spendings'>
+      {isPopupActive ? <AddRecordPopup closePopup={setPopup} addRecord={addRecord} type='spendings' /> : null}
       <div className='spendings__box'>
       <section className='spendings__chart'>
         <h1 className='spendings__chart-header'>Last 30 days</h1>
@@ -194,7 +204,7 @@ const Spendings = ({ userData }) => {
       </section>
       <section className='spendings__record'>
         {renderRecords()}
-        <Link to={{ pathname: '/addrecord' }} state={{ type: 'spendings' }} className='spendings__add-button btn__small-lightorange'>Add +</Link>
+        <button onClick={() => setPopup(!isPopupActive)} className='income__add-button btn__small-lightorange'>Add +</button>
       </section>
       </div>
     </div>

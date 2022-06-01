@@ -44,8 +44,16 @@
         height: 2.5rem;
     }
 
-    &__link {
+    &__button {
         height: 2.5rem;
+        background-color: transparent;
+        outline: none;
+        border: none;
+        transition: all .2s;
+        &:hover {
+            cursor: pointer;
+            transform: scale(1.05);
+        }
     }
 
 }
